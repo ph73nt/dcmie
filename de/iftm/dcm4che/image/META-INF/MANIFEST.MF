@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+
+Name: de/iftm/dcm4che/ImageBean.class
+Java-Bean: true
+
+
+

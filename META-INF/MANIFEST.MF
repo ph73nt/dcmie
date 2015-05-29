@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Created-By: NetBeans
+Class-Path: dcm4che.jar log4j.jar getopt.jar
+
+Name: 
+Implementation-Vendor: IFTM Institut fuer Telematik in der Medizin Gmb
+ H (thomas.hacklaender@iftm.de)
+Implementation-Version: 0.9 [build: DEV]
+Implementation-Title: t
+
