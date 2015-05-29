@@ -207,10 +207,6 @@ public class Dcm_Export extends javax.swing.JFrame implements PlugInFilter, Acti
    */
 	public int setup(String arg, ImagePlus imp) {
     
-	if(arg != null && arg.equals("")){
-		arg = Macro.getOptions();
-	}
-		
 	Getopt              g;
     int                 c;
     Vector              argv;
@@ -222,6 +218,11 @@ public class Dcm_Export extends javax.swing.JFrame implements PlugInFilter, Acti
     char                testType = ' ';
     FileInputStream     propertyFIS = null;
     File                propertyFile = new File("dcmie.properties");
+
+	if(arg == null || arg.equals("")){
+		String macroArgs = Macro.getOptions();
+		arg = macroArgs == null ? "" : macroArgs;
+	}
     
     // Wandelt den arg-String in ein POSIX konformes Array um.
     // siehe auch http://java.sun.com/docs/books/tutorial/essential/attributes/cmdLineArgs.html
@@ -242,7 +243,6 @@ public class Dcm_Export extends javax.swing.JFrame implements PlugInFilter, Acti
         
         case 'p':
           propertyFile = DcmieParam.uriToFile(g.getOptarg());
-          System.out.println(g.getOptarg());
           break;
           
         case 't':

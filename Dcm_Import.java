@@ -151,10 +151,11 @@ public class Dcm_Import extends javax.swing.JFrame implements PlugIn, ActionList
     File                propertyFile = new File("dcmie.properties");
     File                fileInArgument = null;
     
-	if(arg != null && arg.equals("")){
-		arg = Macro.getOptions();
+	if(arg == null || arg.equals("")){
+		String macroArgs = Macro.getOptions();
+		arg = macroArgs == null ? "" : macroArgs;
 	}
-    
+	
     // Wandelt den arg-String in ein POSIX konformes Array um.
     // siehe auch http://java.sun.com/docs/books/tutorial/essential/attributes/cmdLineArgs.html
     tok = new StringTokenizer(arg);
