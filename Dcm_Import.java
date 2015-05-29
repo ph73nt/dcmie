@@ -20,20 +20,22 @@
  * http://www.gnu.org/copyleft/copyleft.html
  */
 
-import java.awt.event.*;
-import java.io.*;
-import java.net.*;
-import java.util.*;
-import javax.swing.*;
+import gnu.getopt.Getopt;
+import ij.IJ;
+import ij.Macro;
+import ij.plugin.PlugIn;
 
-import gnu.getopt.*;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.StringTokenizer;
+import java.util.Vector;
 
-import ij.plugin.*;
+import javax.swing.UIManager;
 
-import de.iftm.dcm4che.dcmie.*;
-import de.iftm.dcm4che.dcmie.imp.*;
-import de.iftm.ij.plugins.dcmie.*;
-import de.iftm.javax.swing.*;
+import de.iftm.dcm4che.dcmie.DcmieParam;
+import de.iftm.ij.plugins.dcmie.FileImporter;
+import de.iftm.javax.swing.Utilities;
 
 
 /**
@@ -140,6 +142,7 @@ public class Dcm_Import extends javax.swing.JFrame implements PlugIn, ActionList
    * @param arg the argument specified for this plugin in IJ_Props.txt. It may be "".
    */
   public void run(String arg) {
+	  
     Getopt              g;
     int                 c;
     Vector              argv;
@@ -147,6 +150,10 @@ public class Dcm_Import extends javax.swing.JFrame implements PlugIn, ActionList
     FileInputStream     propertyFIS = null;
     File                propertyFile = new File("dcmie.properties");
     File                fileInArgument = null;
+    
+	if(arg != null && arg.equals("")){
+		arg = Macro.getOptions();
+	}
     
     // Wandelt den arg-String in ein POSIX konformes Array um.
     // siehe auch http://java.sun.com/docs/books/tutorial/essential/attributes/cmdLineArgs.html
@@ -185,7 +192,7 @@ public class Dcm_Import extends javax.swing.JFrame implements PlugIn, ActionList
       System.err.println("*** Warning: Can't access property-file " + propertyFile.toString());
     }
     
-    // "hideGUI" wird implöizit ueber die Option -f gesetzt
+    // "hideGUI" wird implï¿½izit ueber die Option -f gesetzt
     if (hideGUI) {
       // fileInArgument statt der Dialogbox zur Auswahl des Files verwenden
       if (fileInArgument == null) {

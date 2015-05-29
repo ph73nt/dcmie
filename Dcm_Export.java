@@ -20,27 +20,35 @@
  * http://www.gnu.org/copyleft/copyleft.html
  */
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import java.net.*;
-import java.util.*;
-import javax.swing.*;
+import gnu.getopt.Getopt;
+import ij.IJ;
+import ij.ImagePlus;
+import ij.Macro;
+import ij.plugin.filter.PlugInFilter;
+import ij.process.ImageProcessor;
 
-import gnu.getopt.*;
+import java.awt.Toolkit;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.StringTokenizer;
+import java.util.Vector;
 
-import ij.*;
-import ij.plugin.*;
-import ij.plugin.filter.*;
-import ij.process.*;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
-import org.dcm4che.data.*;
+import org.dcm4che.data.Dataset;
+import org.dcm4che.data.DcmObjectFactory;
+import org.dcm4che.data.DcmValueException;
 
-import de.iftm.ij.plugins.dcmie.*;
-import de.iftm.ij.plugins.dcmie.testip.*;
-import de.iftm.dcm4che.dcmie.*;
-import de.iftm.dcm4che.dcmie.exp.*;
-import de.iftm.javax.swing.*;
+import de.iftm.dcm4che.dcmie.DcmieParam;
+import de.iftm.dcm4che.dcmie.DcmiePropertiesUtil;
+import de.iftm.ij.plugins.dcmie.FileExporter;
+import de.iftm.ij.plugins.dcmie.testip.TestImagePlus;
+import de.iftm.ij.plugins.dcmie.testip.TestImagePlusC8;
+import de.iftm.ij.plugins.dcmie.testip.TestImagePlusG8;
+import de.iftm.ij.plugins.dcmie.testip.TestImageStack;
+import de.iftm.javax.swing.Utilities;
 
 
 /**
@@ -198,7 +206,12 @@ public class Dcm_Export extends javax.swing.JFrame implements PlugInFilter, Acti
    * @return the supported image types.
    */
 	public int setup(String arg, ImagePlus imp) {
-    Getopt              g;
+    
+	if(arg != null && arg.equals("")){
+		arg = Macro.getOptions();
+	}
+		
+	Getopt              g;
     int                 c;
     Vector              argv;
     boolean             testMode = false;
@@ -229,6 +242,7 @@ public class Dcm_Export extends javax.swing.JFrame implements PlugInFilter, Acti
         
         case 'p':
           propertyFile = DcmieParam.uriToFile(g.getOptarg());
+          System.out.println(g.getOptarg());
           break;
           
         case 't':
